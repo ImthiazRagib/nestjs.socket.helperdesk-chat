@@ -7,21 +7,28 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ChatMessage } from './chat/entity/chat-message.entity';
 import { UsersModule } from './users/users.module';
 import { Room } from './rooms/entity/rooms.entity';
+import { ConfigModule } from '@nestjs/config';
+import { Users } from './users/entity/users.entity';
 
 @Module({
   imports: [
+    // Load .env globally
+    ConfigModule.forRoot({
+      isGlobal: true, // 👈 makes it available everywhere
+    }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'yourpassword',
-      database: 'chat_db',
-      autoLoadModels: true,
-      synchronize: true, // ✅ auto create tables in dev
+      host: process.env.DB_HOST || 'localhost',
+      port: Number(process.env.DB_PORT) || 5432,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
+      autoLoadModels: process.env.NODE_ENV === 'dev',
+      synchronize: process.env.NODE_ENV === 'dev', // ✅ auto create tables in dev
       models: [
         ChatMessage,
-        Room
+        Room,
+        Users
       ]
     }),
     ChatModule,
