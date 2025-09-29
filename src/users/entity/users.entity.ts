@@ -1,4 +1,4 @@
-import { Table, Column, Model, PrimaryKey, Default, DataType, HasMany, BelongsToMany, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, Default, DataType, HasMany, BelongsToMany, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { ChatMessage } from 'src/chat/entity/chat-message.entity';
 import { Room } from 'src/rooms/entity/rooms.entity';
 
@@ -34,6 +34,10 @@ export class Users extends Model<Users> {
 
   @HasMany(() => ChatMessage)
   messages: ChatMessage[];
+
+  @ForeignKey(() => Room)
+  @Column(DataType.INTEGER)
+  roomId: number;
 
   @BelongsTo(() => Room)
   rooms: Room[];
