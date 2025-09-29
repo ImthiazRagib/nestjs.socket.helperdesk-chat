@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { Room } from './rooms/entity/rooms.entity';
 import { ConfigModule } from '@nestjs/config';
 import { Users } from './users/entity/users.entity';
+import { RoomsModule } from './rooms/rooms.module';
 
 @Module({
   imports: [
@@ -32,7 +33,8 @@ import { Users } from './users/entity/users.entity';
       ]
     }),
     ChatModule,
-    UsersModule
+    UsersModule,
+    RoomsModule
   ],
   controllers: [AppController],
   providers: [AppService, ChatGateway],

@@ -6,10 +6,11 @@ import { ChatMessage } from './entity/chat-message.entity';
 import { RoomsModule } from 'src/rooms/rooms.module';
 import { RoomsService } from 'src/rooms/rooms.service';
 import { UsersService } from 'src/users/users.service';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([ChatMessage]), RoomsModule],
-  providers: [ChatService, ChatGateway, RoomsService, UsersService],
+  imports: [SequelizeModule.forFeature([ChatMessage]), RoomsModule, UsersModule],
+  providers: [ChatService, ChatGateway],
   exports: [ChatService]
 })
 export class ChatModule { }
